@@ -24,6 +24,14 @@ This repo builds [`bitcoind`] in an [auditable way](https://github.com/lnliz/doc
 
 ## Available Versions
 
+### Latest version
+
+* `knots-latest` (latest current version of Bitcoin Knots)
+* `core-latest` (latest current version of Bitcoin Core)
+* `inq-latest` (latest current version of Bitcoin Inquisition )
+
+### Specific version
+
 > **NOTE:** For an always up-to-date list see: https://hub.docker.com/r/lnliz/bitcoind/tags
 
 * `v31.0` (most current)
