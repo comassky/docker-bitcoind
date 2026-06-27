@@ -2,7 +2,6 @@ name: Build & deploy on git tag push
 
 env:
   APP: bitcoind
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
   # Capture groups within $TAG_FMT:
   #   \1 => TAG       v29.1+build1 or v29.1.knots20250903+build1
@@ -49,10 +48,15 @@ jobs:
             exit 1
           fi
 
-          echo ::set-env name=DIR::"$DIR"
+          TAG="$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\1|")"
+          BUILD="$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\3|")"
 
-          echo ::set-env name=TAG::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\1|")"
-          echo ::set-env name=BUILD::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\3|")"
+          {
+            echo "DIR=$DIR"
+            echo "MINOR=$DIR"
+            echo "TAG=$TAG"
+            echo "BUILD=$BUILD"
+          } >> "$GITHUB_ENV"
 
       - name: Print ENV VARs set above
         run: |
@@ -79,7 +83,6 @@ jobs:
       - name: Run sanity checks
         env:
           DIR: /usr/local/bin
-          MINOR: ${{ env.DIR }}
         run: |
           run() {
             ENTRYPOINT="${1:-$APP}"; shift
@@ -134,9 +137,15 @@ jobs:
     steps:
       - name: Setup environment
         run: |
-          echo ::set-env name=SLUG::"$(echo ${GITHUB_REPOSITORY,,} | sed 's/docker-//')"
-          echo ::set-env name=VERSION::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\2|")"
-          echo ::set-env name=BUILD::"$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\3|")"
+          SLUG="$(echo "${GITHUB_REPOSITORY,,}" | sed 's/docker-//')"
+          VERSION="$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\2|")"
+          BUILD="$(echo "$GITHUB_REF" | sed -E "s|$TAG_FMT|\3|")"
+
+          {
+            echo "SLUG=$SLUG"
+            echo "VERSION=$VERSION"
+            echo "BUILD=$BUILD"
+          } >> "$GITHUB_ENV"
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v4.1.7
@@ -216,4 +225,3 @@ jobs:
         run: |
           (cd docker-images;  sha256sum *) >> ./SHA256SUMS
           cat ./SHA256SUMS
-
