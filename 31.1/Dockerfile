@@ -16,7 +16,6 @@ ARG USER=bitcoind
 ARG DIR=/data
 
 
-
 #
 # preparation stage - retrieve source code
 #
