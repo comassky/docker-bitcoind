@@ -4,6 +4,7 @@
 #   NOTE: Unlike our other images this one is NOT prefixed with `v`,
 #           as many things (like download URLs) use this form instead.
 ARG VERSION=29.2-inq
+ARG SOURCE_SHA256=a5edf4e1eccf0a7d0ceec24154e30d600079cd0100cd2fe363a3fcb6c0a5417e
 
 # CPU architecture to build binaries for
 ARG ARCH
@@ -19,9 +20,13 @@ ARG DIR=/data
 FROM alpine:${VER_ALPINE} AS preparer
 
 ARG VERSION
+ARG SOURCE_SHA256
 
 # Download source code from same website as github is probably deterministicly built
 ADD https://github.com/bitcoin-inquisition/bitcoin/releases/download/v$VERSION/bitcoin-$VERSION.tar.gz ./bitcoin-$VERSION.tar.gz
+
+# Verify that the downloaded source archive matches the pinned digest.
+RUN echo "$SOURCE_SHA256  bitcoin-$VERSION.tar.gz" | sha256sum -c
 
 # Extract
 RUN tar -xzf "bitcoin-$VERSION.tar.gz" && \

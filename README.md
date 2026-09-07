@@ -34,18 +34,23 @@ This repo builds [`bitcoind`] in an [auditable way](https://github.com/lnliz/doc
 
 > **NOTE:** For an always up-to-date list see: https://hub.docker.com/r/lnliz/bitcoind/tags
 
-* `v31.0` (most current)
+* `v31.1` (most current)
+* `v31.0`
 *
+* `v30.3` (most current 30.x)
 * `v30.2` 
 *
-* `v29.2.inq` ([inquisition](https://github.com/bitcoin-inquisition/bitcoin) - most current)
+* `v29.4.inq` ([inquisition](https://github.com/bitcoin-inquisition/bitcoin) - most current)
+* `v29.2.inq`
 * `v29.1.inq`
 *
-* `v29.3.knots20260508` ([knots](https://github.com/bitcoinknots/bitcoin)  - most current)
+* `v29.4.knots20260508` ([knots](https://github.com/bitcoinknots/bitcoin)  - most current)
+* `v29.3.knots20260508`
 * `v29.3.knots20260210`
 * `v29.2.knots20251110` 
 *
-* `v29.3` (most current 29.x) 
+* `v29.4` (most current 29.x)
+* `v29.3`
 * `v29.2`
 * `v29.1`
 * `v29.0`
@@ -67,7 +72,7 @@ This repo builds [`bitcoind`] in an [auditable way](https://github.com/lnliz/doc
 First pull the image from [Docker Hub]:
 
 ```bash
-docker pull lnliz/bitcoind:v31.0
+docker pull lnliz/bitcoind:v31.1
 ```
 
 > **NOTE:** Running above will automatically choose native architecture of your CPU.
@@ -77,7 +82,7 @@ docker pull lnliz/bitcoind:v31.0
 Or, to pull a specific CPU architecture:
 
 ```bash
-docker pull lnliz/bitcoind:v31.0-arm64v8
+docker pull lnliz/bitcoind:v31.1-arm64v8
 ```
 
 #### Start
@@ -98,7 +103,7 @@ docker run  -it  --rm  --detach \
     -p 28332:28332 \
     -p 28333:28333 \
     --name bitcoind \
-    lnliz/bitcoind:v31.0
+    lnliz/bitcoind:v31.1
 ```
 
 That will run bitcoind such that:
@@ -118,7 +123,7 @@ That will run bitcoind such that:
 You can also use [Bitcoin Inquisition](https://github.com/bitcoin-inquisition/bitcoin) by using different image tag:
 
 ```bash
-docker pull lnliz/bitcoind:v29.1.inq
+docker pull lnliz/bitcoind:v29.4.inq
 ```
 
 
@@ -161,7 +166,7 @@ services:
   bitcoin:
     container_name: bitcoind
     user: 1000:1000
-    image: lnliz/bitcoind:v31.0
+    image: lnliz/bitcoind:v31.1
     volumes:
       - ./bitcoin:/data/.bitcoin
     restart: on-failure
@@ -216,4 +221,3 @@ sudo chown -R 1000.1000 $HOME/.bitcoin
 
 
 > The work here was initially based on [lncm/docker-bitcoind](https://github.com/lncm/docker-bitcoind/), but has diverged since.
-

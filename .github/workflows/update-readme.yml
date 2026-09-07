@@ -1,7 +1,5 @@
 name: Update Docker Hub README
 
-env:
-    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 on:
   push:
     branches: [ 'master' ]
@@ -14,7 +12,7 @@ jobs:
     name: Update README to Docker Hub
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v4

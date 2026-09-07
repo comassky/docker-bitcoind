@@ -3,14 +3,14 @@
 # VERSION of Bitcoin Inquitision to be build
 #   NOTE: Unlike our other images this one is NOT prefixed with `v`,
 #           as many things (like download URLs) use this form instead.
-ARG VERSION=29.1-inq
-ARG SOURCE_SHA256=5415ed84b66f3b301488fef01e23a0aac6861b0e99273324cd3701ff4782e882
+ARG VERSION=29.4-inq
+ARG SOURCE_SHA256=472b22e8b10fcc40806c2824a4e431a5591133df5c59dc243bd3de129657bace
 
 # CPU architecture to build binaries for
 ARG ARCH
 
 # Define default versions so that they don't have to be repeated throughout the file
-ARG VER_ALPINE=3.22
+ARG VER_ALPINE=3.24
 
 # $USER name, and data $DIR to be used in the `final` image
 ARG USER=bitcoind
